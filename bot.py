@@ -49,7 +49,7 @@ async def on_message(message):
     if message.author"""
 
 @_bot.command(name='spam', help='Spam something!')
-async def _spam(ctx, person: str, count: int, *msg):
+async def _spam(ctx, person: str, count: int = 5, *msg):
     global TASK
     if count > 20: count=20
     response = (person + ' ' + ' '.join(msg)) if msg else person
