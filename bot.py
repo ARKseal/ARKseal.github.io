@@ -6,11 +6,7 @@ import time as _time
 from discord.ext.commands import Bot as _Bot
 from dotenv import load_dotenv as _load_dotenv
 
-class TEMP:
-    def done(self):
-        return True
-
-async def spammer(ctx, count: int, response: str):
+async def _spammer(ctx, count: int, response: str):
     for _ in range(count):
         await ctx.send(response)
         await _asyncio.sleep(1)
@@ -54,7 +50,7 @@ async def _spam(ctx, person: str, count: int = 5, *msg):
     if count > 40: count=40
     response = (person + ' ' + ' '.join(msg)) if msg else person
 
-    TASK = _asyncio.create_task(spammer(ctx, count, response))
+    TASK = _asyncio.create_task(_spammer(ctx, count, response))
 
     print("Thread Started")
     await TASK
@@ -65,10 +61,10 @@ async def _spam(ctx, person: str, count: int = 5, *msg):
 async def _stop(ctx):
     global TASK
 
-    if not (TASK and TASK.done()):
+    if (not TASK) or TASK.done():
+        print("Task already done")
+    else:
         TASK.cancel()
         print("Thread Stopped")
-    else:
-        print("Task already done")
 
 _bot.run(_TOKEN)
