@@ -15,7 +15,7 @@ async def spammer(ctx, count: int, response: str):
         await ctx.send(response)
         await _asyncio.sleep(1)
 
-TASK = TEMP()
+TASK = None
 
 _load_dotenv()
 _TOKEN = _os.getenv('DISCORD_TOKEN')
@@ -65,7 +65,7 @@ async def _spam(ctx, person: str, count: int = 5, *msg):
 async def _stop(ctx):
     global TASK
 
-    if not TASK.done():
+    if not (TASK and TASK.done()):
         TASK.cancel()
         print("Thread Stopped")
     else:
