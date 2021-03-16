@@ -51,7 +51,7 @@ async def on_message(message):
 @_bot.command(name='spam', help='Spam something!')
 async def _spam(ctx, person: str, count: int = 5, *msg):
     global TASK
-    if count > 30: count=30
+    if count > 40: count=40
     response = (person + ' ' + ' '.join(msg)) if msg else person
 
     TASK = _asyncio.create_task(spammer(ctx, count, response))
