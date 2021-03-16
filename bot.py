@@ -13,7 +13,7 @@ class TEMP:
 async def spammer(ctx, count: int, response: str):
     for _ in range(count):
         await ctx.send(response)
-        await _asyncio.sleep(0.01)
+        await _asyncio.sleep(1)
 
 TASK = TEMP()
 
@@ -51,7 +51,7 @@ async def on_message(message):
 @_bot.command(name='spam', help='Spam something!')
 async def _spam(ctx, person: str, count: int = 5, *msg):
     global TASK
-    #if count > 20: count=20
+    if count > 30: count=30
     response = (person + ' ' + ' '.join(msg)) if msg else person
 
     TASK = _asyncio.create_task(spammer(ctx, count, response))
