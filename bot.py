@@ -51,7 +51,7 @@ async def _spam(ctx, count: int, *people_and_message):
     people = msg = []
     await ctx.send(people_and_message)
     for a in people_and_message:
-        if a.startswith('@'):
+        if a.startswith('<') and a.endswith('>'):
             people.append(a)
         else:
             msg.append(a)
