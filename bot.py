@@ -45,10 +45,17 @@ async def on_message(message):
     if message.author"""
 
 @_bot.command(name='spam', help='Spam something!')
-async def _spam(ctx, person: str, count: int = 5, *msg):
+async def _spam(ctx, count: int, *people_and_message):
     global TASK
     if count > 40: count=40
-    response = (person + ' ' + ' '.join(msg)) if msg else person
+    people = msg = []
+    for a in people_and_message:
+        if a.startswith('@'):
+            people.append(a)
+        else:
+            msg.append(a)
+    if not msg: msg = ["No Message was given"]
+    response = ((' '.join(people) + ' - ') if people else '') + ' '.join(msg)
 
     TASK = _asyncio.create_task(_spammer(ctx, count, response))
 
