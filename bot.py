@@ -48,7 +48,8 @@ async def on_message(message):
 async def _spam(ctx, count: int, *people_and_message):
     global TASK
     if count > 40: count=40
-    people = msg = []
+    people = []
+    msg = []
     await ctx.send(people_and_message)
     for a in people_and_message:
         if a.startswith('<') and a.endswith('>'):
