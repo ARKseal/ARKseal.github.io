@@ -49,13 +49,13 @@ async def _spam(ctx, count: int, *people_and_message):
     global TASK
     if count > 40: count=40
     people = []
-    msg = ['April', 'Fools!', ':japanese_goblin:', ':eyes:', ':liar:', 'pog']
+    msg = []
     for a in people_and_message:
         if a.startswith('<') and a.endswith('>'):
             people.append(a)
         else:
             msg.append(a)
-    if not msg: msg = ["No Message was given"]
+    if not msg: msg = ["No", "Message", "was", "given"]
     response = ((' '.join(people) + ' - ') if people else '') + ' '.join(msg)
 
     TASK = _asyncio.create_task(_spammer(ctx, count, response))
