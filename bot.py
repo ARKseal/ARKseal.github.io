@@ -12,7 +12,7 @@ async def _spammer(ctx, count: int, response: str):
         await _asyncio.sleep(1)
 
 TASK = None
-_code_website = "https://github.com/ARKseal/ARKseal.github.io" 
+_code_website = "https://github.com/ARKseal/ARKseal.github.io"
 
 _load_dotenv()
 _TOKEN = _os.getenv('DISCORD_TOKEN')
