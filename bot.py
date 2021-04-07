@@ -12,7 +12,7 @@ async def _spammer(ctx, count: int, response: str):
         await _asyncio.sleep(1)
 
 TASK = None
-_website_code = "https://github.com/ARKseal/ARKseal.github.io"
+_code_website = "https://github.com/ARKseal/ARKseal.github.io" 
 
 _load_dotenv()
 _TOKEN = _os.getenv('DISCORD_TOKEN')
@@ -78,6 +78,6 @@ async def _stop(ctx):
 
 @_bot.command(name='code', help='')
 async def _code(ctx):
-    ctx.send(f'See my code at {_website_code}')
+    await ctx.send('See my code at {}'.format(_code_website))
 
 _bot.run(_TOKEN)

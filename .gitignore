@@ -1,3 +1,6 @@
 *.env
 get-on-bot
 *.pyc
+requirements.txt
+runtime.txt
+Procfile
