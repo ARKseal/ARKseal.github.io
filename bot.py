@@ -12,7 +12,7 @@ async def _spammer(ctx, count: int, response: str):
         await _asyncio.sleep(1)
 
 TASK = None
-#test
+
 _load_dotenv()
 _TOKEN = _os.getenv('DISCORD_TOKEN')
 
