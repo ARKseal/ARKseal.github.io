@@ -76,7 +76,7 @@ async def _stop(ctx):
         TASK.cancel()
         print("Thread Stopped")
 
-@_bot.command(name='code', help='')
+@_bot.command(name='code', help='Get the link to my code!')
 async def _code(ctx):
     await ctx.send('See my code at {}'.format(_code_website))
 
