@@ -42,7 +42,7 @@ async def _spam(ctx, count: int, *people_and_message):
             people.append(a)
         else:
             msg.append(a)
-    if not msg: msg = ["No", "Message", "was", "given"]
+    if not msg: msg = ["I", "think", "you", "need", "to", "get", "on"]
     response = ((' '.join(people) + ' - ') if people else '') + ' '.join(msg)
 
     TASK.add(ctx.guild, _asyncio.create_task(_spammer(ctx, count, response)))
@@ -57,8 +57,8 @@ async def _stop(ctx):
     global TASK
     TASK.stop(ctx.guild)
 
-@_bot.command(name='code', help='Get the link to my code!')
+@_bot.command(name='code', help='Get the link to my code')
 async def _code(ctx):
-    await ctx.send('See my code at {}'.format(_code_website))
+    await ctx.send('See my code at {} under Get_On_Bot!'.format(_code_website))
 
 _bot.run(_TOKEN)
