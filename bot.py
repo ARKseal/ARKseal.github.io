@@ -6,12 +6,14 @@ import time as _time
 from discord.ext.commands import Bot as _Bot
 from dotenv import load_dotenv as _load_dotenv
 
+from Task_List import *
+
 async def _spammer(ctx, count: int, response: str):
     for _ in range(count):
         await ctx.send(response)
         await _asyncio.sleep(1)
 
-TASK = None
+TASK = Tasklist()
 _code_website = "https://github.com/ARKseal/ARKseal.github.io"
 
 _load_dotenv()
@@ -43,7 +45,7 @@ async def _spam(ctx, count: int, *people_and_message):
     if not msg: msg = ["No", "Message", "was", "given"]
     response = ((' '.join(people) + ' - ') if people else '') + ' '.join(msg)
 
-    TASK = _asyncio.create_task(_spammer(ctx, count, response))
+    TASK.add(ctx.guild, _asyncio.create_task(_spammer(ctx, count, response)))
 
     print("Thread Started")
     await TASK
@@ -53,12 +55,7 @@ async def _spam(ctx, count: int, *people_and_message):
 @_bot.command(name='stop', help='Stop spamming the current spam command')
 async def _stop(ctx):
     global TASK
-
-    if (not TASK) or TASK.done():
-        print("Task already done")
-    else:
-        TASK.cancel()
-        print("Thread Stopped")
+    TASK.stop(ctx.guild)
 
 @_bot.command(name='code', help='Get the link to my code!')
 async def _code(ctx):
