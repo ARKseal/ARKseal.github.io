@@ -15,6 +15,10 @@ class Tasklist(_threading.Thread):
             self._TASKS[guild].append(task)
         else:
             self._TASKS[guild] = [task]
+        self._startTask(guild)
+    
+    def _startTask(self, guild):
+        pass
 
     def _stopCheck(self):
         self._check = False
