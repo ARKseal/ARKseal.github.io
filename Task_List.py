@@ -27,7 +27,7 @@ class Tasklist(_threading.Thread):
 
     def run(self):
         while True:
-            if not self.check:
+            if not self._check:
                 break
             for key, tasks in self._TASKS.items():
                 for task in tasks:
