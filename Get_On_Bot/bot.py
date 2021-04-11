@@ -47,10 +47,6 @@ async def _spam(ctx, count: int, *people_and_message):
 
     TASK.add(ctx.guild, _asyncio.create_task(_spammer(ctx, count, response)))
 
-    print("Thread Started")
-    await TASK
-    print("Thread Ended")
-
 
 @_bot.command(name='stop', help='Stop spamming the current spam command')
 async def _stop(ctx):
