@@ -1,26 +1,28 @@
 import asyncio as _asyncio
 import os as _os
-import threading as _threading
-import time as _time
 
 from discord.ext.commands import Bot as _Bot
 from dotenv import load_dotenv as _load_dotenv
-import string as _string
 
-from Task_List import *
+from Drive_Communicator import Drive_Communicator
+from Json_Handler import Json_Handler
+from Task_List import Tasklist
+
 
 async def _spammer(ctx, count: int, response: str):
     for _ in range(count):
         await ctx.send(response)
         await _asyncio.sleep(1)
 
-TASK = Tasklist()
-VALUES = {}
-
-_code_website = "https://github.com/ARKseal/ARKseal.github.io"
-
 _load_dotenv()
 _TOKEN = _os.getenv('DISCORD_TOKEN')
+
+_FILEID = _os.getenv('FILE_ID')
+DRIVE = Drive_Communicator(_FILEID)
+TASK = Tasklist()
+VALUES = Json_Handler()
+
+_code_website = "https://github.com/ARKseal/ARKseal.github.io"
 
 _bot = _Bot(command_prefix='?')
 
@@ -30,16 +32,18 @@ async def on_ready():
     global VALUES
 
     for guild in _bot.guilds:
-        VALUES[guild] = {
-            'spam': ['max count', 40],
-            'stop': [],
-            'code': [],
-            'change': []
-        }
+        print(guild.__repr__())
+        if guild.__repr__() not in VALUES.getData():
+            VALUES[guild.__repr__()] = {
+                'spam': ['max count', 40],
+                'stop': [],
+                'code': [],
+                'change': []
+            }
 
 @_bot.event
 async def on_guild_join(guild):
-    VALUES[guild] = {
+    VALUES[guild.__repr__()] = {
         'spam': ['max count', 40],
         'stop': [],
         'code': [],
@@ -56,7 +60,7 @@ async def on_message(message):
 async def _spam(ctx, count: int, *people_and_message):
     global TASK
     guild = ctx.guild
-    max_count = VALUES[guild]['spam'][1]
+    max_count = VALUES[guild.__repr__()]['spam'][1]
     if count > max_count: count = max_count
     people = []
     msg = []
@@ -87,10 +91,10 @@ async def _change(ctx, command: str, value: int):
     guild = ctx.guild
 
     command = command.lower()
-    if command in VALUES[guild]:
-        if command:
-            old_val = VALUES[guild][command]
-            VALUES[guild][command][1] = value
+    if command in VALUES[guild.__repr__()]:
+        if VALUES[guild.__repr__()][command]:
+            old_val = VALUES[guild.__repr__()][command][:]
+            VALUES[guild.__repr__()][command][1] = value
             await ctx.send("The value '{o[0]}' in the command '{c}' changed from '{o[1]}' to '{v}'".format(o=old_val,c=command,v=value))
         else:
             await ctx.send("There are no changeable values in the command '{}'".format(command))
